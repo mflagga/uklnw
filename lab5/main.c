@@ -3,15 +3,15 @@
 int main(){
     // parametry jednostkowe
     double m=1.0;
-    double hbar=1.0;
+    double hbar=sqrt(2.0*m*0.0381); // dla [nm] i [eV]
 
     // parametry ukladu
     double L=50.0;
-    int n=500;
+    int n=700;
     cmp V0=0.02;
-    double E=0.04;
+    double E=0.034333;
     int nE=300;
-    double LE=2*V0;
+    double LE=5*V0;
 
     // parametry wtórne
     int N=n+1;
@@ -35,6 +35,13 @@ int main(){
     for (int i=0;i<=n;i++){
         fprintf(p1psi,"%lf,%lf\n",x[i],pow(cabs(psi[i]),2));
     }
+
+    FILE *p1V=fopen("p1V.csv","w");
+    for (int i=0;i<=n;i++){
+        if (i!=0) fprintf(p1V,",");
+        fprintf(p1V,"%lf",creal(V[i]));
+    }
+    fclose(p1V);
 
     FILE *p1E=fopen("p1E.csv","w");
     double T;
