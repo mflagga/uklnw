@@ -7,10 +7,10 @@ int main(){
 
     // parametry ukladu
     double L=50.0;
-    int n=700;
+    int n=1000;
     cmp V0=0.02;
     double E=0.034333;
-    int nE=300;
+    int nE=1000;
     double LE=5*V0;
 
     // parametry wtórne
@@ -30,12 +30,13 @@ int main(){
     // rozwiazanie
     solve(psi,V,N,t,E,k,a);
 
-    // zapisanie
+    // zapisanie rozwiazania
     FILE *p1psi=fopen("p1psi.csv","w");
     for (int i=0;i<=n;i++){
         fprintf(p1psi,"%lf,%lf\n",x[i],pow(cabs(psi[i]),2));
     }
 
+    // zapisanie potencjalu
     FILE *p1V=fopen("p1V.csv","w");
     for (int i=0;i<=n;i++){
         if (i!=0) fprintf(p1V,",");
@@ -43,6 +44,7 @@ int main(){
     }
     fclose(p1V);
 
+    // zapisanie T(E)
     FILE *p1E=fopen("p1E.csv","w");
     double T;
     for (int i=0;i<nE;i++){
@@ -50,6 +52,26 @@ int main(){
         T=TodE(E,psi,V,N,t,a,m,hbar);
         fprintf(p1E,"%lf,%lf\n",E,T);
     }
+
+    // bariera gaussowska
+    initGauss(V,n,L/2,L/5,x);
+    FILE *p2E=fopen("p2E.csv","w");
+    for (int i=0;i<nE;i++){
+        E=(i+1)*dE;
+        T=TodE(E,psi,V,N,t,a,m,hbar);
+        fprintf(p2E,"%lf,%lf\n",E,T);
+    }
+    fclose(p2E);
+
+    // dwie bariery
+    initDwieBar(V,n,L/2,L/10,L/5,V0,x);
+    FILE *p3E=fopen("p3E.csv","w");
+    for (int i=0;i<nE;i++){
+        E=(i+1)*dE;
+        T=TodE(E,psi,V,N,t,a,m,hbar);
+        fprintf(p3E,"%lf,%lf\n",E,T);
+    }
+    fclose(p3E);
 
     // czystki
     free(psi);

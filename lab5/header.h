@@ -54,3 +54,20 @@ double TodE(double E, cmp *psi, cmp *V, int N, double t, double a, double m, dou
     solve(psi,V,N,t,E,k,a);
     return pow(cabs(psi[N-1]),2);
 }
+
+void initGauss(cmp *V, int n, double mu, double sigma, double *x){
+    for (int i=0;i<=n;i++){
+        V[i]=1.0/(sqrt(2.0*M_PI*sigma*sigma))*exp(-pow(x[i]-mu,2)/(2.0*sigma*sigma));
+    }
+}
+
+void initDwieBar(cmp *V, int n, double srodek, double a, double b, cmp V0, double *x){
+    for (int i=0;i<=n;i++){
+        if ((x[i]>=srodek-0.5*b-a && x[i]<=srodek-0.5*b) || (x[i]>=srodek+0.5*b && x[i]<=srodek+0.5*b+a)){
+            V[i]=V0;
+        }
+        else{
+            V[i]=0.0;
+        }
+    }
+}
