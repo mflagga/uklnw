@@ -9,7 +9,7 @@ int main(){
     double L=50.0;
     int n=1000;
     cmp V0=0.02;
-    double E=0.034333; // energia rezonansu dla ukl pierwszego
+    double E=0.034700; // energia rezonansu dla ukl pierwszego
     int nE=1000;
     double LE=5*V0;
 
@@ -44,7 +44,12 @@ int main(){
     }
     fclose(p1V);
 
+    // zapisanie parametrow
+    FILE *misc=fopen("misc.csv","w");
+    fprintf(misc,"%lf,",E);
+
     // zapisanie T(E)
+    clock_t t0 = clock();
     FILE *p1E=fopen("p1E.csv","w");
     double T;
     for (int i=0;i<nE;i++){
@@ -52,9 +57,12 @@ int main(){
         T=TodE(E,psi,V,N,t,a,m,hbar);
         fprintf(p1E,"%lf,%lf\n",E,T);
     }
+    clock_t t1 = clock();
+    printf("Uklad pierwszy: nE=%d; czas=%.4lfs\n", nE, (double)(t1-t0)/CLOCKS_PER_SEC);
 
     // bariera gaussowska
-    initGauss(V,n,L/2,L/7,x);
+    clock_t t2 = clock();
+    initGauss(V,n,L/2,L/17,x,L,V0);
     FILE *p2E=fopen("p2E.csv","w");
     for (int i=0;i<nE;i++){
         E=(i+1)*dE;
@@ -62,9 +70,11 @@ int main(){
         fprintf(p2E,"%lf,%lf\n",E,T);
     }
     fclose(p2E);
+    clock_t t3 = clock();
+    printf("Uklad drugi: nE=%d; czas=%.4lfs\n", nE, (double)(t3-t2)/CLOCKS_PER_SEC);
 
     // zapisanie psi i V
-    E=0.7;
+    E=0.04;
     k=sqrt(2.0*m*E)/hbar;
     solve(psi,V,N,t,E,k,a);
     FILE *p2psi=fopen("p2psi.csv","w");
@@ -72,7 +82,10 @@ int main(){
         fprintf(p2psi,"%lf,%lf\n",pow(cabs(psi[i]),2),creal(V[i]));
     }
 
+    fprintf(misc,"%lf,",E);
+
     // dwie bariery
+    clock_t t4 = clock();
     initDwieBar(V,n,L/2,L/10,L/5,V0,x);
     FILE *p3E=fopen("p3E.csv","w");
     for (int i=0;i<nE;i++){
@@ -81,15 +94,19 @@ int main(){
         fprintf(p3E,"%lf,%lf\n",E,T);
     }
     fclose(p3E);
+    clock_t t5 = clock();
+    printf("Uklad trzeci: nE=%d; czas=%.4lfs\n", nE, (double)(t5-t4)/CLOCKS_PER_SEC);
 
     // zapisanie psi i V dla energii rez
-    E=0.08;
+    E=0.018600;
     k=sqrt(2.0*m*E)/hbar;
     solve(psi,V,N,t,E,k,a);
     FILE *p3psi=fopen("p3psi.csv","w");
     for (int i=0;i<=n;i++){
         fprintf(p3psi,"%lf,%lf\n",pow(cabs(psi[i]),2),creal(V[i]));
     }
+
+    fprintf(misc,"%lf",E);
 
     // czystki
     free(psi);
@@ -99,6 +116,7 @@ int main(){
     fclose(p1E);
     fclose(p3psi);
     fclose(p2psi);
+    fclose(misc);
 
     // return zero
     return 0;

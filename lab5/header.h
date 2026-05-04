@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <complex.h>
+#include <time.h>
 
 typedef double complex cmp;
 
@@ -55,9 +56,9 @@ double TodE(double E, cmp *psi, cmp *V, int N, double t, double a, double m, dou
     return pow(cabs(psi[N-1]),2);
 }
 
-void initGauss(cmp *V, int n, double mu, double sigma, double *x){
+void initGauss(cmp *V, int n, double mu, double sigma, double *x, double L, cmp V0){
     for (int i=0;i<=n;i++){
-        V[i]=1.0/(sqrt(2.0*M_PI*sigma*sigma))*exp(-pow(x[i]-mu,2)/(2.0*sigma*sigma));
+        V[i]=(L/10*V0)*1.0/(sqrt(2.0*M_PI*sigma*sigma))*exp(-pow(x[i]-mu,2)/(2.0*sigma*sigma));
     }
 }
 
