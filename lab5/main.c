@@ -7,10 +7,10 @@ int main(){
 
     // parametry ukladu
     double L=50.0;
-    int n=1000;
+    int n=2000;
     cmp V0=0.02;
     double E=0.034700; // energia rezonansu dla ukl pierwszego
-    int nE=1000;
+    int nE=10000;
     double LE=5*V0;
 
     // parametry wtórne
@@ -33,20 +33,20 @@ int main(){
     // zapisanie rozwiazania
     FILE *p1psi=fopen("p1psi.csv","w");
     for (int i=0;i<=n;i++){
-        fprintf(p1psi,"%lf,%lf\n",x[i],pow(cabs(psi[i]),2));
+        fprintf(p1psi,"%e,%e\n",x[i],pow(cabs(psi[i]),2));
     }
 
     // zapisanie potencjalu
     FILE *p1V=fopen("p1V.csv","w");
     for (int i=0;i<=n;i++){
         if (i!=0) fprintf(p1V,",");
-        fprintf(p1V,"%lf",creal(V[i]));
+        fprintf(p1V,"%e",creal(V[i]));
     }
     fclose(p1V);
 
     // zapisanie parametrow
     FILE *misc=fopen("misc.csv","w");
-    fprintf(misc,"%lf,",E);
+    fprintf(misc,"%e,",E);
 
     // zapisanie T(E)
     clock_t t0 = clock();
@@ -55,10 +55,10 @@ int main(){
     for (int i=0;i<nE;i++){
         E=(i+1)*dE;
         T=TodE(E,psi,V,N,t,a,m,hbar);
-        fprintf(p1E,"%lf,%lf\n",E,T);
+        fprintf(p1E,"%e,%e\n",E,T);
     }
     clock_t t1 = clock();
-    printf("Uklad pierwszy: nE=%d; czas=%.4lfs\n", nE, (double)(t1-t0)/CLOCKS_PER_SEC);
+    printf("Uklad pierwszy: nx=%d; nE=%d; czas=%.4lfs\n", n, nE, (double)(t1-t0)/CLOCKS_PER_SEC);
 
     // bariera gaussowska
     clock_t t2 = clock();
@@ -67,11 +67,11 @@ int main(){
     for (int i=0;i<nE;i++){
         E=(i+1)*dE;
         T=TodE(E,psi,V,N,t,a,m,hbar);
-        fprintf(p2E,"%lf,%lf\n",E,T);
+        fprintf(p2E,"%e,%e\n",E,T);
     }
     fclose(p2E);
     clock_t t3 = clock();
-    printf("Uklad drugi: nE=%d; czas=%.4lfs\n", nE, (double)(t3-t2)/CLOCKS_PER_SEC);
+    printf("Uklad drugi: nx=%d; nE=%d; czas=%.4lfs\n", n, nE, (double)(t3-t2)/CLOCKS_PER_SEC);
 
     // zapisanie psi i V
     E=0.04;
@@ -79,10 +79,10 @@ int main(){
     solve(psi,V,N,t,E,k,a);
     FILE *p2psi=fopen("p2psi.csv","w");
     for (int i=0;i<=n;i++){
-        fprintf(p2psi,"%lf,%lf\n",pow(cabs(psi[i]),2),creal(V[i]));
+        fprintf(p2psi,"%e,%e\n",pow(cabs(psi[i]),2),creal(V[i]));
     }
 
-    fprintf(misc,"%lf,",E);
+    fprintf(misc,"%e,",E);
 
     // dwie bariery
     clock_t t4 = clock();
@@ -91,22 +91,22 @@ int main(){
     for (int i=0;i<nE;i++){
         E=(i+1)*dE;
         T=TodE(E,psi,V,N,t,a,m,hbar);
-        fprintf(p3E,"%lf,%lf\n",E,T);
+        fprintf(p3E,"%e,%e\n",E,T);
     }
     fclose(p3E);
     clock_t t5 = clock();
-    printf("Uklad trzeci: nE=%d; czas=%.4lfs\n", nE, (double)(t5-t4)/CLOCKS_PER_SEC);
+    printf("Uklad trzeci: nx=%d; nE=%d; czas=%.4lfs\n", n, nE, (double)(t5-t4)/CLOCKS_PER_SEC);
 
     // zapisanie psi i V dla energii rez
-    E=0.018600;
+    E=8.900000e-03;
     k=sqrt(2.0*m*E)/hbar;
     solve(psi,V,N,t,E,k,a);
     FILE *p3psi=fopen("p3psi.csv","w");
     for (int i=0;i<=n;i++){
-        fprintf(p3psi,"%lf,%lf\n",pow(cabs(psi[i]),2),creal(V[i]));
+        fprintf(p3psi,"%e,%e\n",pow(cabs(psi[i]),2),creal(V[i]));
     }
 
-    fprintf(misc,"%lf",E);
+    fprintf(misc,"%e",E);
 
     // czystki
     free(psi);
