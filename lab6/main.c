@@ -10,8 +10,8 @@ int main(){
     // parametry układu
     double Lx=60.0;
     double Ly=25.0;
-    int nx=720;
-    int ny=300;
+    int nx=1200;
+    int ny=500;
     double V0=0.2;
     double alpha=0.5;
     double LE=1.0;
@@ -54,7 +54,7 @@ int main(){
         for (int j=0;j<ny-1;j++) Vn[i*(ny-1)+j]=evals[j];
     }
     clock_t t1=clock();
-    printf("Wszystkie (ny=%d) diagonalizacje w czasie %.4lfs\n",ny,(double)(t1-t0)/CLOCKS_PER_SEC);
+    printf("Wszystkie (nx=%d) diagonalizacje w czasie %.4lfs\n",nx,(double)(t1-t0)/CLOCKS_PER_SEC);
 
     // zapisanie potencjału nowego
     FILE *Vnmap=fopen("Vnmap.csv","w");
@@ -86,7 +86,7 @@ int main(){
         // G[l] *= e*e/(M_PI*hbar);
     }
     clock_t t3=clock();
-    printf("Wyznaczenie G metodą QTBM w czasie %.4lfs\n",(double)(t3-t2)/CLOCKS_PER_SEC);
+    printf("Wyznaczenie G metoda QTBM w czasie %.4lfs\n",(double)(t3-t2)/CLOCKS_PER_SEC);
 
     // zapis konduktacji od energii
     FILE *Gfile=fopen("Gfile.csv","w");

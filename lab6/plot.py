@@ -1,9 +1,8 @@
+import time
+t0 =time.time()
 # pyright: reportUndefinedVariable=false
 import numpy as np
 import matplotlib.pyplot as plt
-import time
-
-t0 =time.time()
 
 def wczytaj(*nazwy): # funkcja do wczytywania plikow od clauda
     for nazwa in nazwy:
@@ -23,10 +22,10 @@ E=Gfile[:,0]
 G=Gfile[:,1]
 
 # wykres potencjalu
-plt.figure(figsize=(9.6,5.4))
+plt.figure(figsize=(10,3.7))
 plt.imshow(V,origin='lower',extent=[0,Lx,0,Ly],cmap='hot')
 plt.xlabel(rf'$x\ [nm]$')
-plt.title('Potencjał')
+plt.title(rf'Potencjał $V(x,y)$')
 plt.ylabel(rf'$y\ [nm]$')
 plt.colorbar()
 plt.tight_layout()
@@ -34,10 +33,10 @@ plt.savefig("Vmap.png")
 plt.close()
 
 # wykres roboczego potencjalu dla qtbm
-plt.figure(figsize=(6,6))
-plt.imshow(Vn,origin='lower',extent=[0,1,0,1],cmap='hot')
-plt.xlabel(rf'$x\ [nm]$')
-plt.title('Wartości własne dla poszczególnych przekrojów')
+plt.figure(figsize=(10,3.7))
+plt.imshow(Vn,origin='lower',extent=[0,nx+1,0,ny-1],cmap='hot')
+plt.xlabel(rf'$x[i]$')
+plt.title(rf'$\epsilon_n(x_i)$')
 plt.ylabel(rf'$n$')
 plt.colorbar()
 plt.tight_layout()
