@@ -5,17 +5,17 @@ int main(){
     // parametry jednostkowe
     double m=1.0;
     double hbar=sqrt(2.0*m*0.0381); // dla [nm] i [eV]
-    double e=1.0;
+    // double e=1.0;
 
     // parametry układu
     double Lx=60.0;
     double Ly=25.0;
     int nx=720;
     int ny=300;
-    double V0=0.02;
+    double V0=0.2;
     double alpha=0.5;
-    double LE=10*V0;
-    int nE=400;
+    double LE=1.0;
+    int nE=75;
 
     // parametry wtórne
     double dx=Lx/nx;
@@ -79,7 +79,7 @@ int main(){
         for (int j=0;j<ny-1;j++){
             G[l] += T[j*nE+l];
         }
-        G[l] *= e*e/(M_PI*hbar);
+        // G[l] *= e*e/(M_PI*hbar);
     }
 
     // zapis konduktacji od energii
