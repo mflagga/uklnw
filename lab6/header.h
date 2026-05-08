@@ -80,3 +80,13 @@ double TodE(double E, cmp *psi, double *V, int N, double t, double a, double m, 
     solve(psi,V,N,t,E,k,a);
     return pow(cabs(psi[N-1]),2);
 }
+
+// rozwiazac zwykly 1d hamiltonian diagonalizacja
+// zapisac tylko wartosci wlasne
+// dla kazdego x mamy zestaw wartosci wlasnych
+// E = (liczba energii(ny)) x (nx)
+// # poziomy energii dla danego x powinny wygladac jak sinus
+// kazdy wiersz o dlugosci nx traktuje jak potencjal dla metody qtbm
+// dla kazdego wiersza rozwiazuje uklad wielokrotnie qbtm dla roznych energii
+// sumuje transmitancje po wierszach dla danej energii uzyskujac ogolna transmitancje dla tej energii
+// mam wszystkie T_n wiec moge zastosowac wzor landauera
