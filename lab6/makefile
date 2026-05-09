@@ -31,7 +31,7 @@ EXEC = main.out
 SCRIPT = plot.py
 DATA = Vmap.csv misc.csv Vnmap.csv Gfile.csv
 MEDIA = Vmap.png Vnmap.png Gfile.png
-TEX = sprawozdanie.tex
+TEX = spr.tex
 REPORT = sprawozdanie.pdf
 
 all: $(REPORT)
@@ -46,8 +46,8 @@ $(MEDIA): $(SCRIPT) $(DATA)
 	$(PC) $(SCRIPT)
 
 $(REPORT): $(TEX) $(MEDIA)
-	latexmk -pdf -silent -output-directory=build $< > $(DEVNULL)
-	$(MV) ./build/$@ ./$@
+	latexmk -pdf -output-directory=build $< > $(DEVNULL)
+	$(MV) build/spr.pdf $@
 
 clean:
 	$(RM) $(EXEC)

@@ -23,7 +23,7 @@ G=Gfile[:,1]
 
 # wykres potencjalu
 plt.figure(figsize=(10,3.7))
-plt.imshow(V,origin='lower',extent=[0,Lx,0,Ly],cmap='hot')
+plt.imshow(V,origin='lower',extent=[0,Lx,0,Ly],cmap='gnuplot2')
 plt.xlabel(rf'$x\ [nm]$')
 plt.title(rf'Potencjał $V(x,y)$')
 plt.ylabel(rf'$y\ [nm]$')
@@ -34,7 +34,7 @@ plt.close()
 
 # wykres roboczego potencjalu dla qtbm
 plt.figure(figsize=(10,3.7))
-plt.imshow(Vn,origin='lower',extent=[0,nx+1,0,ny-1],cmap='hot')
+plt.imshow(Vn,origin='lower',extent=[0,nx+1,0,ny-1],cmap='jet')
 plt.xlabel(rf'$x[i]$')
 plt.title(rf'$\epsilon_n(x_i)$')
 plt.ylabel(rf'$n$')
@@ -43,7 +43,8 @@ plt.tight_layout()
 plt.savefig("Vnmap.png")
 plt.close()
 
-plt.figure(figsize=(6,6))
+# wykres konduktancji
+plt.figure(figsize=(5,5))
 plt.plot(E,G,c='k')
 plt.xlabel(rf'$E\ [eV]$')
 plt.ylabel(rf'Znormalizowna konduktancja $\frac{{G}}{{G_0}}$')
