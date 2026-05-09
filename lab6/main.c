@@ -15,7 +15,7 @@ int main(){
     double V0=0.2;
     double alpha=0.5;
     double LE=5*V0;
-    int nE=75;
+    int nE=150;
 
     // parametry wtórne
     double dx=Lx/nx;

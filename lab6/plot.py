@@ -44,7 +44,7 @@ plt.savefig("Vnmap.png")
 plt.close()
 
 # wykres konduktancji
-plt.figure(figsize=(5,5))
+plt.figure(figsize=(7,7))
 plt.plot(E,G,c='k')
 plt.xlabel(rf'$E\ [eV]$')
 plt.ylabel(rf'Znormalizowna konduktancja $\frac{{G}}{{G_0}}$')
