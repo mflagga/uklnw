@@ -23,7 +23,7 @@ endif
 .SUFFIXES:
 
 CXX = gcc
-LIBS = -lm
+LIBS = -lm -lgsl -lgslcblas
 CFLAGS = -Wall -Wextra -Werror -Wpedantic -O3
 SRCS = main.c
 HDRS = header.h
@@ -31,8 +31,8 @@ SCRIPT = plot.py
 TEX = spr.tex
 EXEC = main.out
 REPORT = sprawozdanie.pdf
-DATA =
-MEDIA =
+DATA = mp.csv misc.csv
+MEDIA = mp.png
 
 all: $(REPORT)
 
