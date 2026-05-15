@@ -9,7 +9,7 @@ int main(){
     // parametry układu
     double a=1.0;
     double V0=100.0;
-    int N=800;
+    int N=200;
     int Nk=30;
 
     // parametry wtórne

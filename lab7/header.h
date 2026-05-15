@@ -9,7 +9,7 @@
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_sort_vector.h>
 
-void initV(double *V, int N, double V0, double w, double *x){
+inline void initV(double *V, int N, double V0, double w, double *x){
     for (int i=0;i<N;i++){
         if (x[i]>=-w/2 && x[i]<=w/2) V[i]=-fabs(V0);
         else V[i]=0.0;
