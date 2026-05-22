@@ -46,7 +46,7 @@ $(MEDIA): $(SCRIPT) $(DATA)
 	$(PC) $<
 
 $(REPORT): $(TEX) $(MEDIA)
-	latexmk -pdf -output-directory=build $< > $(DEVNULL)
+	latexmk -pdf -interaction=nonstopmode -output-directory=build $< > $(DEVNULL)
 	$(MV) build/spr.pdf $@
 
 clean:

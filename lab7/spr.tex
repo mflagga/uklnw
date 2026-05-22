@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[final,a4paper,twocolumn]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{float} % Inf
 \usepackage{enumitem}
+\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{yfonts}
 % \usepackage{braket} % kwant
@@ -16,7 +17,7 @@
 % \usetikzlibrary{positioning, arrows.meta, calc}
 \usepackage[margin=2cm]{geometry}
 % \usepackage{tabularx}
-%\usepackage[version=4]{mhchem} % Chemia
+% \usepackage[version=4]{mhchem} % Chemia
 \usepackage{hyperref}
 \hypersetup{
 colorlinks=true,
@@ -29,6 +30,8 @@ urlcolor=red
   breaklines=false,
   frame=single
 }
+
+\captionsetup[figure]{name=Wykres}
 
 \title{\Huge{\textgoth{Sprawozdanie - Projekt 7}}}
 \author{\Huge{\textfrak{Maciej Flaga}}}
@@ -43,14 +46,118 @@ urlcolor=red
 
 \subsection{Metoda RS}
 
-Zdefiniowano potencjał jako pojedynczą studnię i uwzględniono periodyczne warunki brzegowe w macierzy hamiltonianu. Napisano funkcję \texttt{diagHdlaK}, która korzysta z biblioteki \texttt{GSL} i jej funkcji do wyznaczania wartości własnych macierzy. Następnie zdiagonalizowano macierz dla różnych wartości $k$ na siatce $k\in[-\pi/a, \pi/a]$. Wykreślono dane poziomy energetyczne w funkcji wektora falowego:
+\hspace{0.4cm}Zdefiniowano potencjał jako pojedynczą studnię i uwzględniono periodyczne warunki brzegowe w macierzy hamiltonianu. 
 
-\begin{figure}[H]
+\begin{figure}
   \centering
-  \includegraphics[width=0.85\linewidth]{mp.png}
-  \caption{Wyniki dla $V_0=-100,\ a=1$}
+  \includegraphics[width=0.95\linewidth]{rsV.png}
+  \caption{Potencjał dla metody RS}
+  \label{rsV}
 \end{figure}
 
-\section{Źródła}
+Napisano funkcję \texttt{diagHdlaK}, która korzysta z biblioteki \texttt{GSL} i jej funkcji do wyznaczania wartości własnych macierzy. 
+Następnie zdiagonalizowano macierz dla różnych wartości $k$ na siatce $k\in[-\frac{\pi}{a}, \frac{\pi}{a}]$. 
+Wykreślono dane poziomy energetyczne w funkcji wektora falowego:
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\linewidth]{mp.png}
+  \caption{Pierwsze 4 pasma otrzymane metodą RS}
+  \label{mp}
+\end{figure}
+
+Zbadano wpływ parametrów $a$ oraz $V_0$ na szerokość i przerwy energetyczne pasm. 
+Wyniki dla pierwszych 8 pasm przedstawia Wykres \ref{parametry}.
+
+Widzimy, że przy zwiększeniu stałej sieciowej $a$ pasma stają się bardzo wąskie.
+Pierwsze cztery pasma widoczne na Wykresie \ref{mp} teraz wyglądałyby jak poziome linie. 
+Przerwy energetyczne też stają się troche mniejsze oraz ich tendencja do wzrostu utrzymuję się dłużej tj. przez pierwsze cztery pasma.
+Zmniejszenie głębokości potencjału studni dwukrotnie nie wpływa znacząco na szerokość pasm natomiast sprawia, że pasma znajdują się bliżej siebie tzn. przerwy energetyczne są mniejsze. 
+Porównując wykresy \ref{dE} i \ref{dEV}, widzimy że dla mniejszej głębokości studni wartości przerw energetycznych zaczynają niżej oraz szybko spadają do wartości poniżej $5\ [a.u.]$.
+
+\subsection{Metoda TBA}
+
+\hspace{0.4cm}Zaczęto od rozwiązania pojedynczej studni potencjału scentrowanej w zerze na pudle obliczeniowym $x\in[-2a,3a]$.
+W tym celu ponownie skorzystano z biblioteki \texttt{GSL} otrzymując energię i funckję własną odpowiadającą stanowi podstawowemu.
+Następnie zdefiniowano potencjał $V_{tot}$ jako trzy studnie scentrowane w zerze przedstawiony na Wykresie 4.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\linewidth]{tbaV.png}
+  \caption{Potencjał $V_{tot}$}
+  \label{tbaV}
+\end{figure}
+
+Dysponując potencjałem, energią oraz funkcją własną wyliczono całkę hoppingu oraz całkę przekrywania, które następnie pozwoliły wyznaczyć energię ze wzoru
+
+\begin{align*}
+  \epsilon(k)=\frac{E+2t\cos{(ka)}}{1+2s\cos{(ka)}}
+\end{align*}
+
+Wyznaczona relacja dyspersji przedstawiona jest na wykresie \ref{tbaE} razem z odpowiednikiem pasma uzyskanym z metody RS.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.95\linewidth]{tbaE.png}
+  \caption{Porównanie pierwszego pasma dla różnych metod}
+  \label{tbaE}
+\end{figure}
+
+Widzimy, że kształt pasm jest bardzo zbliżony natomiast ich położenie jest różne. 
+
+\begin{figure*}[t]
+  \centering
+
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{W.png}
+    \caption{Szerokość pasm -- parametry bazowe}
+    \label{W}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{deltaE.png}
+    \caption{Przerwa energetyczna -- parametry bazowe}
+    \label{dE}
+  \end{subfigure}
+
+  \vspace{0.3em}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/Wa2.png}
+    \caption{Szerokość pasm -- $a*=2$}
+    \label{Wa}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/deltaEa2.png}
+    \caption{Przerwa energetyczna -- $a*=2$}
+    \label{dEa}
+  \end{subfigure}
+
+  \vspace{0.3em}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/WV50.png}
+    \caption{Szerokość pasm -- $V_0*=0.5$}
+    \label{WV}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/deltaEV50.png}
+    \caption{Przerwa energetyczna -- $V_0*=0.5$}
+    \label{dEV}
+  \end{subfigure}
+
+  \caption{Wpływ parametrów $a$ oraz $V_0$ na strukturę pasmową}
+  \label{parametry}
+\end{figure*}
+
+% \section{Źródła}
 
 \end{document}

@@ -8,7 +8,7 @@ int main(){
 
     // parametry układu
     double a=1.0;
-    double V0=50.0;
+    double V0=100.0;
     int N=500;
     int Nk=30;
 
@@ -33,7 +33,6 @@ int main(){
         diagHdlaK(k,N,dx,t,V,ev);
         for (int j=0;j<N;j++){
             macierzPasmowa[p*N+j]=ev[j];
-            // tu trzeba dodac szukanie mina i maaxa dla danego poziomu E i wypelnieneie wektora W + zmienna max_poprzedni i wypelnienie wektora deltaE
         }
     }
 
@@ -67,7 +66,7 @@ int main(){
     for (int i=0;i<N;i++) fprintf(rsV,"%lf,%lf\n",x[i],V[i]);
 
     FILE *misc=fopen("misc.csv","w");
-    fprintf(misc,"%d,%d,%lf",N,Nk,a);
+    fprintf(misc,"%d,%d,%lf,%lf",N,Nk,a,V0);
 
     FILE *przerwy=fopen("przerwy.csv","w");
     for (int j=0;j<N;j++) fprintf(przerwy,"%lf,%lf\n",W[j],deltaE[j]);

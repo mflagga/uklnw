@@ -6,3 +6,7 @@ nwenv/*
 *.txt
 /.vscode/*
 **/build/
+!deltaEa2.png
+!deltaEV50.png
+!Wa2.png
+!WV50.png
