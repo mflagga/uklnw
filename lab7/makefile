@@ -3,9 +3,10 @@ ifeq ($(OS),Windows_NT)
 	RM = del /q
 	RMDIR = rmdir /s /q
 	MV = move
-	DEVNULL = NUL
+	DEVNULL = NUL 2>&1
 	VR = @echo nie ma valgrinda na windowsie
-	AVE = ../nwenv/Scripts/activate
+	SLASH = $(strip \)
+	AVE = ..$(SLASH)nwenv$(SLASH)Scripts$(SLASH)activate
 else
 	ifdef VIRTUAL_ENV
 		PC = python
@@ -15,6 +16,7 @@ else
 	RM = rm -f
 	RMDIR = rm -rf
 	MV = mv
+	SLASH = /
 	DEVNULL = /dev/null
 	VR = valgrind ./$(EXEC)
 	AVE = source ../nwenv/bin/activate
@@ -47,7 +49,7 @@ $(MEDIA): $(SCRIPT) $(DATA)
 
 $(REPORT): $(TEX) $(MEDIA)
 	latexmk -pdf -interaction=nonstopmode -output-directory=build $< > $(DEVNULL)
-	$(MV) build/spr.pdf $@
+	$(MV) build$(SLASH)spr.pdf $@ > $(DEVNULL)
 
 clean:
 	$(RM) $(EXEC)
