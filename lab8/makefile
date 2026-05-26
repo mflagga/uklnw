@@ -37,7 +37,7 @@ REPORT = sprawozdanie.pdf
 DATA = 
 MEDIA = 
 
-all: $(REPORT)
+all: gotowe
 
 %.o: %.c $(HDRS)
 	$(CXX) $< $(CFLAGS) -o $@ -c
