@@ -26,7 +26,7 @@ endif
 
 CXX = gcc
 LIBS = -lm
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -O3
+CFLAGS = -Wall -Wextra -Werror -Wpedantic
 SRCS = main.c def.c
 OBJS = main.o def.o
 HDRS = dek.h
