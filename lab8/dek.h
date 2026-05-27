@@ -6,3 +6,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <complex.h>
+#include <string.h>
+
+typedef complex double cmp;
+
+void matmul(cmp*,cmp*,cmp*,int);
+void dagger(cmp*,cmp*,int);
+void initH(cmp*,int,double,double);
