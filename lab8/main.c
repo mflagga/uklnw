@@ -27,32 +27,25 @@ int main(){
     dagger(F,Fdagger,N);
     matmul(Fdagger,F,jeden,N);
 
-    // for (int i=0;i<N;i++){
-    //     for (int j=0;j<N;j++){
-    //         printf("%lf\t",creal(jeden[i*N+j]));
-    //     }
-    //     printf("\n");
-    // }
-
-    // printf("Diagonala F:\n");
-    // for (int i=0;i<N;i++) printf("(%e,%e)\n",creal(jeden[i*N+i]),cimag(jeden[i*N+i]));
+    zapiszModulMacierzy(jeden,N,"jeden.csv");
+    zapiszReMacierzy(F,N,"Fre.csv");
+    zapiszImMacierzy(F,N,"Fim.csv");
 
     // hamiltonian
     cmp *H=calloc(N*N,sizeof(cmp));
     initH(H,N,t,eps);
+
+    zapiszReMacierzy(H,N,"H.csv");
 
     // baza pedowa
     cmp *Hk=malloc(N*N*sizeof(cmp));
     matmul(Fdagger,H,jeden,N); // Fdagger * H -> temp
     matmul(jeden,F,Hk,N); // temp * F -> Hk
 
-    // sprawdzenie diagonalnosci
-    for (int i=0;i<N;i++){
-        for (int j=0;j<N;j++){
-            printf("%lf\t",creal(Hk[i*N+j]));
-        }
-        printf("\n");
-    }
+    zapiszReMacierzy(Hk,N,"Hk.csv");
+
+    FILE *misc=fopen("misc.csv","w");
+    fprintf(misc,"%d,%lf,%lf,%lf",N,a,eps,t);
 
     // czystki
     free(F);
@@ -60,6 +53,7 @@ int main(){
     free(jeden);
     free(H);
     free(Hk);
+    fclose(misc);
 
     // return zero
     return 0;

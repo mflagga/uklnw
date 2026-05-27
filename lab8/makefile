@@ -34,10 +34,10 @@ SCRIPT = plot.py
 TEX = spr.tex
 EXEC = main.out
 REPORT = sprawozdanie.pdf
-DATA = 
-MEDIA = 
+DATA = jeden.csv H.csv Hk.csv misc.csv Fre.csv Fim.csv
+MEDIA = jeden.png H.png Hk.png dysp.png Fre.png Fim.png
 
-all: gotowe
+all: $(REPORT)
 
 %.o: %.c $(HDRS)
 	$(CXX) $< $(CFLAGS) -o $@ -c

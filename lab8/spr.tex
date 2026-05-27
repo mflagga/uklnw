@@ -1,4 +1,4 @@
-\documentclass[draft,a4paper,onecolumn,10pt]{article}
+\documentclass[final,a4paper,twocolumn,12pt]{article}
 \usepackage{graphicx}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -56,10 +56,189 @@
 
 \maketitle
 
-\section{Wstęp teoretyczny}
-
 \section{Realizacja}
 
-\section{Źródła}
+\subsection{Omówienie kodu}
+
+\subsubsection{Funkcje}
+
+Napisano funkcje ``pomocnicze'' do:
+
+\begin{itemize}
+    \item mnożenia dwóch macierzy -- \texttt{matmul}
+    \item hermitowskiego sprzężenia -- \texttt{dagger}
+    \item inicjalizowania hamiltonianu dla danych parametrów -- \texttt{initH}
+    \item zapisywania macierzy -- \texttt{zapiszXMacierzy}
+\end{itemize}
+
+\subsubsection{Macierz F}
+
+\paragraph{Definicja}
+
+Plik \texttt{main.c} zaczęto od zdefiniowania macierzy $\hat{F}$ zgodnie ze wzorem
+
+\begin{align*}
+    F_{lm} = \frac{1}{\sqrt{N}}\exp{\left(\frac{2\pi mla}{Na}\right)}
+\end{align*}
+
+Graficzną postać $\hat{F}$ przedstawia Wykres \vref{F}.
+
+\paragraph{Unitarność}
+
+Sprawdzono unitarność macierzy poprzez obliczenie $\hat{F}^\dagger\hat{F}$ spodziewając się macierzy jednostkowej. 
+Postać iloczynu przedstawiona jest na Wykresie \ref{jeden}, przy czym wzięto moduł każdego elementu na potrzebę wykreślenia liczb rzeczywistych. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{jeden.png}
+    \caption{Moduł elementów macierzy $\hat{F}^\dagger \hat{F}$}
+    \label{jeden}
+\end{figure}
+
+\subsubsection{Hamiltonian}
+
+Kolejnym krokiem było zdefiniowanie hamiltonianu uwzględniającego periodyczne warunki brzegowe zgodnie ze wzorem z wykładu.
+Jego postać przedstawia Wykres \ref{H}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{H.png}
+    \caption{Część rzeczywista hamiltonianu}
+    \label{H}
+\end{figure}
+
+\subsubsection{Hamiltonian w bazie pędów}
+
+Obliczono hamiltonian w bazie pędów $\hat{H}_k$ zgodnie ze wzorem
+
+\begin{align*}
+    \hat{H}_k=\hat{F}^\dagger \hat{H}\hat{F}
+\end{align*}
+\noindent
+spodziewając się, że uzyskana macierz będzie postaci diagonalnej. 
+Otrzymany wynik przedstawia Wykres \ref{Hk}.
+W tym miejscu pozwolono sobie na ``utratę'' informacji biorąc część rzeczywistą każdego elementu.
+Taka operacja jest jednak uzasadniona ponieważ hamiltonian w oryginalnej bazie był hermitowski oraz mamy duże podejrzenia, że $\hat{F}$ jest macierzą przejścia więc wartości na diagonali powinny już być rzeczywiste.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{Hk.png}
+    \caption{Hamiltonian w bazie pędów}
+    \label{Hk}
+\end{figure}
+
+\subsection{Wnioski}
+
+Uzyskane wartości własne na diagonali macierzy $\hat{H}_k$ są wektorem energii, który posłuży nam do wyznaczenia relacji dyspersji układu. 
+Wykreślono je w bardziej przystępnej formie wraz z spodziewanym wynikiem analitycznym określonym wzorem
+
+\begin{align*}
+    E(k)=\epsilon + 2t\cos{(ka)}
+\end{align*}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{dysp.png}
+    \caption{Porównanie pasm}
+    \label{dysp}
+\end{figure}
+
+Widzimy, że uzyskane pasmo dobrze odwzorowuje analityczny wynik. 
+
+\subsubsection{Wpływ parametrów na strukturę pasma}
+
+\paragraph{Metodologia}
+
+Zbadano wpływ wartości całki hopping'u oraz energii na strukturę pasma. 
+W tym celu przeprowadzono analizę ortogonalną z bazą $(\epsilon,t)=(2,-1)$. 
+Sprawdzane wartości: $\epsilon\in \{ 1,4 \}$; $t\in \{ 0,+1 \}$.
+Otrzymane pasma przedstawia Wykres \ref{parametry}. 
+
+\begin{figure*}[t]
+  \centering
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{dysp.png}
+    \caption{Parametry bazowe}
+    \label{dysp2}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/pies.png}
+    \caption{Pies}
+    \label{nic}
+  \end{subfigure}
+
+  \vspace{0.3em}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/de1.png}
+    \caption{$\epsilon=1$}
+    \label{de1}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/de4.png}
+    \caption{$\epsilon=4$}
+    \label{de4}
+  \end{subfigure}
+
+  \vspace{0.3em}
+
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/dt0.png}
+    \caption{$t=0$}
+    \label{dt0}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.45\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/dtm2.png}
+    \caption{$t=1$}
+    \label{dt1}
+  \end{subfigure}
+
+  \caption{Wpływ parametrów $\epsilon$ oraz $t$ na strukturę pasma}
+  \label{parametry}
+\end{figure*}
+
+\paragraph{Wniosek}
+
+Widzimy, że uzyskane wykresy wciąż podporządkowują się wzorowi analitycznemu więc wszystkie wnioski można wyciągnąć na podstawie wzoru.
+Niemniej jednak:
+
+\paragraph{Energia}
+
+Dla zmienionej wartości $\epsilon$ otrzymujemy liniową odpowiedź od średniej energii pasma. 
+Można powiedzieć, że $\epsilon$ służy jako parametr translacji wzdłuż osi energii.
+Nie ma on wpływu na szerokość pasma.
+
+\paragraph{Całka Hopping'u}
+
+Zmieniając parametr $t$ ponownie otrzymujemy liniową zależność, tym razem od szerokości pasma.
+Całka hopping'u służy jako parametr skalowania kształtu pasma wzdłuż osi energii.
+Nie ma ona wpływu na średnią energię pasma.
+
+% to na koniec
+\begin{figure*}[t]
+    \centering
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=0.85\linewidth]{Fre.png}
+        \label{Fre}
+    \end{subfigure}
+    \vspace{2em}
+    \begin{subfigure}[t]{\linewidth}
+        \centering
+        \includegraphics[width=0.85\linewidth]{Fim.png}
+        \label{Fim}
+    \end{subfigure}
+    \caption{Rzeczywista i urojona część macierzy $\hat{F}$}
+    \label{F}
+\end{figure*}
 
 \end{document}
