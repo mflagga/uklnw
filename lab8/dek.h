@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <complex.h>
-#include <string.h>
 
 typedef complex double cmp;
 
