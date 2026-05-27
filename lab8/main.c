@@ -47,7 +47,12 @@ int main(){
     matmul(jeden,F,Hk,N); // temp * F -> Hk
 
     // sprawdzenie diagonalnosci
-    
+    for (int i=0;i<N;i++){
+        for (int j=0;j<N;j++){
+            printf("%lf\t",creal(Hk[i*N+j]));
+        }
+        printf("\n");
+    }
 
     // czystki
     free(F);
