@@ -25,7 +25,7 @@ Recmap='bwr'
 
 plt.figure(figsize=(1.2*size,size))
 plt.imshow(jeden.reshape((N,N)),cmap=Modcmap)
-plt.title(rf"$|\hat{{F}}^\dagger \hat{{F}}|$")
+plt.title(rf"$\Re(\hat{{F}}^\dagger \hat{{F}})$")
 plt.colorbar()
 plt.tight_layout()
 plt.savefig("jeden.png",dpi=150)

@@ -24,7 +24,7 @@ int main(){
     dagger(F,Fdagger,N);
     matmul(Fdagger,F,jeden,N);
 
-    zapiszModulMacierzy(jeden,N,"jeden.csv");
+    zapiszReMacierzy(jeden,N,"jeden.csv");
     zapiszReMacierzy(F,N,"Fre.csv");
     zapiszImMacierzy(F,N,"Fim.csv");
 
